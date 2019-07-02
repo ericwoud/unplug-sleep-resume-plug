@@ -1,0 +1,14 @@
+[Unit]
+Description=Unplug Sleep Resume Plug Service
+Before=sleep.target
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/su -c "/bin/echo -n 0 > /sys/bus/usb/drivers/usb/1-5/authorized"
+ExecStop=/bin/su -c "/bin/echo -n 1 > /sys/bus/usb/drivers/usb/1-5/authorized"
+TimeoutSec=90s
+
+[Install]
+WantedBy=sleep.target
